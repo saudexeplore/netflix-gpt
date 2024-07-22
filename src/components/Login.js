@@ -1,8 +1,22 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Header from "./Header";
+import {checkvalidData} from "../utils/validate"
 
 const Login = () => {
   const [isSignInForm, setisSignInForm] = useState(true);
+  const [errorMesseg, seterrorMesseg] = useState(null);
+
+  const email = useRef(null);
+  const password = useRef(null);
+
+
+
+  const handleButtonClick = ()=>{
+
+    const messeg = checkvalidData(email.current.value, password.current.value)
+    seterrorMesseg(messeg);
+
+  }
 
   const toggleSignInForm = () => {
     setisSignInForm(!isSignInForm);
@@ -18,7 +32,8 @@ const Login = () => {
       <div className="main-container z-10 relative">
         <Header />
         <div className="h-[calc(100vh-125px)] flex items-center justify-center pb-5">
-          <div className="w-96 bg-black opacity-70 rounded-sm px-20">
+          <div className="w-96 bg-black opacity-70 rounded-sm px-16">
+            <form onSubmit={(e) => e.preventDefault()}>
             <h4 className="text-3xl text-white font-semibold mt-5 mb-3">
               {isSignInForm ? "Sign In" : "Sign Up"}
             </h4>
@@ -31,17 +46,20 @@ const Login = () => {
             />
             }
             <input
+            ref={email}
               type="text"
               placeholder="Email or Mobile number"
               className="rounded-sm p-2 my-2 w-full"
             />
             
             <input
+            ref={password}
               type="password"
               placeholder="Password"
               className="rounded-sm p-2 my-4 w-full"
             />
-            <button className="py-2 px-4 text-white border border-gray-500 bg-red-700 w-full">
+            <p className="text-red-700 mb-2">{errorMesseg}</p>
+            <button className="py-2 px-4 text-white border border-gray-500 bg-red-700 w-full" onClick={handleButtonClick}>
               { isSignInForm ? "Sign In" : "Sign Up"}
             </button>
             <p className="text-white my-3 text-center">OR</p>
@@ -63,6 +81,7 @@ const Login = () => {
                 </a>
               </p>
             </div>
+            </form>
           </div>
         </div>
       </div>
