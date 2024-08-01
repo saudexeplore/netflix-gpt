@@ -1,10 +1,14 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import {checkvalidData} from "../utils/validate"
+import {auth} from "../utils/firebase"
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [isSignInForm, setisSignInForm] = useState(true);
   const [errorMesseg, seterrorMesseg] = useState(null);
+  const navigate = useNavigate()
 
   const email = useRef(null);
   const password = useRef(null);
@@ -12,6 +16,35 @@ const Login = () => {
   const handleButtonClick = ()=>{
     const messeg = checkvalidData(email.current.value, password.current.value)
     seterrorMesseg(messeg);
+    console.log("The mesge is " ,messeg);
+    if(messeg) return
+    // sign up and sign in logic start 
+    if(!isSignInForm){
+      createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+      .then((userCredential) => {
+      const user = userCredential.user;
+      console.log(user);
+      })
+      .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode+ "-" + errorMessage);
+      });
+    }else{
+      signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+    .then((userCredential) => {
+    const user = userCredential.user;
+    console.log(user);
+    navigate('/Browse');
+    })
+    .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorCode+ "-" + errorMessage);
+    });
+    }
+
+    
   }
 
   const toggleSignInForm = () => {
