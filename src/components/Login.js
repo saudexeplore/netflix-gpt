@@ -6,11 +6,11 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfi
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {addUser } from "../utils/userSlice"
+import { AVTAR_IMG } from "../utils/constant";
 
 const Login = () => {
   const [isSignInForm, setisSignInForm] = useState(true);
   const [errorMesseg, seterrorMesseg] = useState(null);
-  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const name = useRef(null);
@@ -29,13 +29,11 @@ const Login = () => {
       const user = userCredential.user;
       console.log(user);
       updateProfile(user, {
-        displayName: name.current.value, photoURL: "https://example.com/jane-q-user/profile.jpg"
+        displayName: name.current.value, photoURL: AVTAR_IMG
       }).then(() => {
         const {uid, email, displayName, photoURL} = auth.currentUser;
-        dispatch(addUser({uid: uid, email: email, displayName: displayName, photoURL: photoURL}));
-        navigate('/Browse');
+        dispatch(addUser({uid: uid, email: email, displayName: displayName, photoURL: photoURL}));        
       }).catch((error) => {
-        navigate('/');
       });      
       })
       .catch((error) => {
@@ -47,8 +45,6 @@ const Login = () => {
       signInWithEmailAndPassword(auth, email.current.value, password.current.value)
     .then((userCredential) => {
     const user = userCredential.user;
-    console.log(user);
-    navigate('/Browse');
     })
     .catch((error) => {
     const errorCode = error.code;
