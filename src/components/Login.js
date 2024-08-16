@@ -6,7 +6,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfi
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {addUser } from "../utils/userSlice"
-import { AVTAR_IMG } from "../utils/constant";
+import { AVTAR_IMG, BACK_IMG } from "../utils/constant";
 
 const Login = () => {
   const [isSignInForm, setisSignInForm] = useState(true);
@@ -20,7 +20,6 @@ const Login = () => {
   const handleButtonClick = ()=>{
     const messeg = checkvalidData(email.current.value, password.current.value)
     seterrorMesseg(messeg);
-    console.log("The mesge is " ,messeg);
     if(messeg) return
     // sign up and sign in logic start 
     if(!isSignInForm){
@@ -64,7 +63,7 @@ const Login = () => {
     <div className="relative">
       <img
         className="absolute top-0 left-0 h-screen w-screen"
-        src="https://assets.nflxext.com/ffe/siteui/vlv3/335ddde7-3955-499c-b4cc-ca2eb7e1ae71/a7d20bc1-831c-4f9d-8153-11bdf7a08d23/IN-en-20240624-POP_SIGNUP_TWO_WEEKS-perspective_WEB_13cda806-d858-493e-b4aa-f2792ff965dc_large.jpg"
+        src={BACK_IMG}
         alt="bg-image"
       />
       <div className="main-container z-10 relative">
