@@ -46,7 +46,7 @@ const Header = () => {
 
 
   return (
-    <div className='flex justify-between px-8 absolute w-full bg-gradient-to-b from-black z-10'>
+    <div className='flex justify-between px-8 absolute w-full bg-gradient-to-b from-black z-10 text-white'>
       <a href='/'>
         <img className='max-w-60' src={LOGO} alt='logo' />
         </a>
